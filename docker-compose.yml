@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  # Agent Container
+  browser-agent:
+    build: .
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - ANONYMIZED_TELEMETRY=false
+    volumes:
+      - ./tasks:/app/tasks
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # (Optional) MCP Server if needed
+  # mcp-server:
+  #   image: python:3.11-slim
+  #   command: python mcp_tool_server.py
