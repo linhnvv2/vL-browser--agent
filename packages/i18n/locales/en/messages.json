@@ -262,7 +262,6 @@
   "options_general_replayHistoricalTasks_desc": {
     "message": "Enable storing and replaying of agent step history (experimental, may have issues)"
   },
-
   "options_models_providers_header": {
     "message": "LLM Providers"
   },
@@ -290,7 +289,6 @@
   "options_models_providers_custom_name_placeholder": {
     "message": "Provider name"
   },
-
   "options_models_providers_apiKey": {
     "message": "API Key"
   },
@@ -309,21 +307,18 @@
   "options_models_providers_apiKey_show": {
     "message": "Show API key"
   },
-
   "options_models_selection_header": {
     "message": "Model Selection"
   },
   "options_models_speechToText_header": {
     "message": "Speech-to-Text Model"
   },
-
   "options_models_agents_navigator": {
     "message": "Navigates websites and performs actions"
   },
   "options_models_agents_planner": {
     "message": "Develops and refines strategies to complete tasks"
   },
-
   "options_models_labels_model": {
     "message": "Model"
   },
@@ -411,7 +406,6 @@
       }
     }
   },
-
   "options_firewall_header": {
     "message": "Firewall"
   },
@@ -448,7 +442,57 @@
   "options_firewall_howItWorks": {
     "message": "The firewall contains a deny list and an allow list.\nIf both lists are empty, all URLs are allowed\nDeny list takes priority - if a URL matches any deny list entry, it's blocked\nWhen allow list is empty, all non-denied URLs are allowed\nWhen allow list is not empty, only matching URLs are allowed\nWildcards are NOT supported yet\nAllow list is preferred over deny list"
   },
-
+  "options_tabs_mcp": {
+    "message": "MCP"
+  },
+  "options_mcp_header": {
+    "message": "Model Context Protocol (MCP)"
+  },
+  "options_mcp_description": {
+    "message": "Configure MCP servers to extend agent capabilities with external tools."
+  },
+  "options_mcp_addServer": {
+    "message": "Add MCP Server"
+  },
+  "options_mcp_serverName": {
+    "message": "Server Name"
+  },
+  "options_mcp_serverUrl": {
+    "message": "Server URL"
+  },
+  "options_mcp_placeholder_name": {
+    "message": "e.g. My Tools"
+  },
+  "options_mcp_placeholder_url": {
+    "message": "e.g. http://localhost:8080/sse"
+  },
+  "options_mcp_btnDelete": {
+    "message": "Delete"
+  },
+  "options_mcp_noServers": {
+    "message": "No MCP servers configured."
+  },
+  "options_mcp_import": {
+    "message": "Bulk Import"
+  },
+  "options_mcp_importPlaceholder": {
+    "message": "Paste your mcpServers JSON configuration here..."
+  },
+  "options_mcp_importBtn": {
+    "message": "Import Configuration"
+  },
+  "options_mcp_importError": {
+    "message": "Invalid JSON format. Please check your configuration."
+  },
+  "options_mcp_importSuccess": {
+    "message": "Successfully imported $COUNT$ servers.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
   "bg_errors_noTabId": {
     "message": "No tab ID provided"
   },
@@ -548,7 +592,6 @@
   "exec_replay_historyEmpty": {
     "message": "History is empty"
   },
-
   "act_searchGoogle_start": {
     "message": "Searching for \"$QUERY$\" in Google",
     "placeholders": {

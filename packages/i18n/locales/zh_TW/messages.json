@@ -442,6 +442,57 @@
   "options_firewall_howItWorks": {
     "message": "防火牆包含一個拒絕清單和一個允許清單。\n- 如果兩個清單都為空，則允許所有 URL。\n- 拒絕清單具有較高優先順序。如果一個 URL 符合任何拒絕清單中的項目，它將被封鎖。\n- 當允許清單為空時，所有未被拒絕的 URL 都會被允許。\n- 當允許清單不為空時，只有符合清單中項目的 URL 才被允許。\n- 目前尚不支援萬用字元。\n- 建議優先使用允許清單，而非拒絕清單。"
   },
+  "options_tabs_mcp": {
+    "message": "MCP"
+  },
+  "options_mcp_header": {
+    "message": "Model Context Protocol (MCP)"
+  },
+  "options_mcp_description": {
+    "message": "配置 MCP 伺服器以使用外部工具擴展代理功能。"
+  },
+  "options_mcp_addServer": {
+    "message": "添加 MCP 伺服器"
+  },
+  "options_mcp_serverName": {
+    "message": "伺服器名稱"
+  },
+  "options_mcp_serverUrl": {
+    "message": "伺服器 URL"
+  },
+  "options_mcp_placeholder_name": {
+    "message": "例如：我的工具"
+  },
+  "options_mcp_placeholder_url": {
+    "message": "例如：http://localhost:8080/sse"
+  },
+  "options_mcp_btnDelete": {
+    "message": "刪除"
+  },
+  "options_mcp_noServers": {
+    "message": "未配置 MCP 伺服器。"
+  },
+  "options_mcp_import": {
+    "message": "批量導入"
+  },
+  "options_mcp_importPlaceholder": {
+    "message": "在處粘貼您的 mcpServers JSON 配置..."
+  },
+  "options_mcp_importBtn": {
+    "message": "導入配置"
+  },
+  "options_mcp_importError": {
+    "message": "無效的 JSON 格式。請檢查您的配置。"
+  },
+  "options_mcp_importSuccess": {
+    "message": "成功導入 $COUNT$ 個伺服器。",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
   "bg_errors_noTabId": {
     "message": "未提供分頁 ID"
   },

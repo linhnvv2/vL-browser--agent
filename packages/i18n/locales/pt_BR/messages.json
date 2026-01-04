@@ -289,7 +289,6 @@
   "options_models_providers_custom_name_placeholder": {
     "message": "Nome do provedor"
   },
-
   "options_models_providers_apiKey": {
     "message": "Chave de API"
   },
@@ -308,21 +307,18 @@
   "options_models_providers_apiKey_show": {
     "message": "Mostrar chave de API"
   },
-
   "options_models_selection_header": {
     "message": "Seleção de Modelo"
   },
   "options_models_speechToText_header": {
     "message": "Modelo de Fala para Texto"
   },
-
   "options_models_agents_navigator": {
     "message": "Navega em sites e executa ações"
   },
   "options_models_agents_planner": {
     "message": "Desenvolve e refina estratégias para completar tarefas"
   },
-
   "options_models_labels_model": {
     "message": "Modelo"
   },
@@ -410,7 +406,6 @@
       }
     }
   },
-
   "options_firewall_header": {
     "message": "Firewall"
   },
@@ -447,7 +442,57 @@
   "options_firewall_howItWorks": {
     "message": "O firewall contém uma lista de negações e uma lista de permissões.\nSe ambas as listas estiverem vazias, todos os URLs são permitidos\nA lista de negações tem prioridade - se um URL corresponder a qualquer entrada da lista de negações, ele será bloqueado\nQuando a lista de permissões está vazia, todos os URLs não negados são permitidos\nQuando a lista de permissões não está vazia, apenas os URLs correspondentes são permitidos\nCuringas ainda NÃO são suportados\nA lista de permissões é preferível à lista de negações"
   },
-
+  "options_tabs_mcp": {
+    "message": "MCP"
+  },
+  "options_mcp_header": {
+    "message": "Model Context Protocol (MCP)"
+  },
+  "options_mcp_description": {
+    "message": "Configurar servidores MCP para estender as capacidades do agente com ferramentas externas."
+  },
+  "options_mcp_addServer": {
+    "message": "Adicionar Servidor MCP"
+  },
+  "options_mcp_serverName": {
+    "message": "Nome do Servidor"
+  },
+  "options_mcp_serverUrl": {
+    "message": "URL do Servidor"
+  },
+  "options_mcp_placeholder_name": {
+    "message": "ex: Minhas Ferramentas"
+  },
+  "options_mcp_placeholder_url": {
+    "message": "ex: http://localhost:8080/sse"
+  },
+  "options_mcp_btnDelete": {
+    "message": "Excluir"
+  },
+  "options_mcp_noServers": {
+    "message": "Nenhum servidor MCP configurado."
+  },
+  "options_mcp_import": {
+    "message": "Importação em Lote"
+  },
+  "options_mcp_importPlaceholder": {
+    "message": "Cole sua configuração JSON mcpServers aqui..."
+  },
+  "options_mcp_importBtn": {
+    "message": "Importar Configuração"
+  },
+  "options_mcp_importError": {
+    "message": "Formato JSON inválido. Verifique sua configuração."
+  },
+  "options_mcp_importSuccess": {
+    "message": "Importados com sucesso $COUNT$ servidores.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
   "bg_errors_noTabId": {
     "message": "Nenhum ID de aba fornecido"
   },
@@ -547,7 +592,6 @@
   "exec_replay_historyEmpty": {
     "message": "O histórico está vazio"
   },
-
   "act_searchGoogle_start": {
     "message": "Procurando por \"$QUERY$\" no Google",
     "placeholders": {
