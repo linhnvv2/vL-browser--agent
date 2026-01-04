@@ -28,6 +28,7 @@ import { createLogger } from '@src/background/log';
 import { ExecutionState, Actors } from '../event/types';
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import { wrapUntrustedContent } from '../messages/utils';
+import { MCPService, type MCPTool } from '../../services/mcp';
 
 const logger = createLogger('Action');
 
@@ -48,7 +49,7 @@ export class Action {
     public readonly schema: ActionSchema,
     // Whether this action has an index argument
     public readonly hasIndex: boolean = false,
-  ) {}
+  ) { }
 
   async call(input: unknown): Promise<ActionResult> {
     // Validate input before calling the handler
@@ -701,6 +702,60 @@ export class ActionBuilder {
       true,
     );
     actions.push(selectDropdownOption);
+
+    return actions;
+  }
+
+  buildMcpActions(mcpTools: MCPTool[]) {
+    const actions: Action[] = [];
+
+    for (const tool of mcpTools) {
+      const actionName = `mcp__${tool.serverName}__${tool.name}`.replace(/\s+/g, '_');
+
+      // Create a dynamic schema that accepts any object
+      // The prompt will still describe the tool
+      const schema: ActionSchema = {
+        name: actionName,
+        description: `(MCP Tool from ${tool.serverName}) ${tool.description || ''}`,
+        schema: z.record(z.any()).describe(JSON.stringify(tool.inputSchema || {})),
+      };
+
+      const action = new Action(async (input: any) => {
+        const intent = `Calling MCP tool ${tool.name} from ${tool.serverName}`;
+        this.context.emitEvent(Actors.NAVIGATOR, ExecutionState.ACT_START, intent);
+
+        try {
+          const mcpService = MCPService.getInstance();
+          const result = await mcpService.callTool(tool.serverName, tool.name, input);
+
+          const content = result.content.map((c: any) => {
+            if (c.type === 'text') return c.text;
+            if (c.type === 'image') return '[Image]';
+            if (c.type === 'resource') return `[Resource: ${c.uri}]`;
+            return '';
+          }).join('\n');
+
+          const msg = `MCP Tool Result (${tool.name}):\n${content}`;
+          this.context.emitEvent(Actors.NAVIGATOR, ExecutionState.ACT_OK, msg);
+
+          return new ActionResult({
+            extractedContent: msg,
+            success: !result.isError,
+            includeInMemory: true
+          });
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          this.context.emitEvent(Actors.NAVIGATOR, ExecutionState.ACT_FAIL, `MCP Tool Error: ${errorMsg}`);
+          return new ActionResult({
+            error: errorMsg,
+            success: false,
+            includeInMemory: true
+          });
+        }
+      }, schema);
+
+      actions.push(action);
+    }
 
     return actions;
   }

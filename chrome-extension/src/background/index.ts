@@ -18,6 +18,7 @@ import { DEFAULT_AGENT_OPTIONS } from './agent/types';
 import { SpeechToTextService } from './services/speechToText';
 import { injectBuildDomTreeScripts } from './browser/dom/service';
 import { analytics } from './services/analytics';
+import { MCPService } from './services/mcp';
 
 const logger = createLogger('background');
 
@@ -64,6 +65,11 @@ analyticsSettingsStore.subscribe(() => {
   analytics.updateSettings().catch(error => {
     logger.error('Failed to update analytics settings:', error);
   });
+});
+
+// Initialize MCP service
+MCPService.getInstance().initialize().catch(error => {
+  logger.error('Failed to initialize MCP service:', error);
 });
 
 // Listen for simple messages (e.g., from options page)

@@ -25,6 +25,7 @@ import { chatHistoryStore } from '@extension/storage/lib/chat';
 import type { AgentStepHistory } from './history';
 import type { GeneralSettingsConfig } from '@extension/storage';
 import { analytics } from '../services/analytics';
+import { MCPService } from '../services/mcp';
 
 const logger = createLogger('Executor');
 
@@ -69,7 +70,9 @@ export class Executor {
     this.plannerPrompt = new PlannerPrompt();
 
     const actionBuilder = new ActionBuilder(context, extractorLLM);
-    const navigatorActionRegistry = new NavigatorActionRegistry(actionBuilder.buildDefaultActions());
+    const mcpTools = MCPService.getInstance().getTools();
+    const actions = [...actionBuilder.buildDefaultActions(), ...actionBuilder.buildMcpActions(mcpTools)];
+    const navigatorActionRegistry = new NavigatorActionRegistry(actions);
 
     // Initialize agents with their respective prompts
     this.navigator = new NavigatorAgent(navigatorActionRegistry, {

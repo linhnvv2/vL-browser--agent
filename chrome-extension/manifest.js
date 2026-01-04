@@ -60,7 +60,7 @@ const manifest = withOperaSidebar(
     name: 'vLAgent',
     short_name: 'vLAgent',
     content_security_policy: {
-      extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' http://localhost:1234 http://localhost:11434 ws://localhost:1234;"
+      extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' http://localhost:* ws://localhost:*;"
     },
     version: packageJson.version,
     description: '__MSG_app_metadata_description__',
