@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { FaMicrophone } from 'react-icons/fa';
+import { FaMicrophone, FaGlobe } from 'react-icons/fa';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { t } from '@extension/i18n';
 
@@ -16,6 +16,8 @@ interface ChatInputProps {
   // Historical session ID - if provided, shows replay button instead of send button
   historicalSessionId?: string | null;
   onReplay?: (sessionId: string) => void;
+  isResearchMode?: boolean;
+  onToggleResearchMode?: () => void;
 }
 
 // File attachment interface
@@ -37,6 +39,8 @@ export default function ChatInput({
   isDarkMode = false,
   historicalSessionId,
   onReplay,
+  isResearchMode,
+  onToggleResearchMode,
 }: ChatInputProps) {
   const [text, setText] = useState('');
   const [attachedFiles, setAttachedFiles] = useState<AttachedFile[]>([]);
@@ -191,23 +195,20 @@ export default function ChatInput({
         {/* File attachments display */}
         {attachedFiles.length > 0 && (
           <div
-            className={`flex flex-wrap gap-2 border-b p-2 ${
-              isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-gray-200 bg-gray-50'
-            }`}>
+            className={`flex flex-wrap gap-2 border-b p-2 ${isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-gray-200 bg-gray-50'
+              }`}>
             {attachedFiles.map((file, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs ${
-                  isDarkMode ? 'bg-slate-700 text-gray-300' : 'bg-gray-200 text-gray-700'
-                }`}>
+                className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs ${isDarkMode ? 'bg-slate-700 text-gray-300' : 'bg-gray-200 text-gray-700'
+                  }`}>
                 <span className="text-xs">📎</span>
                 <span className="max-w-[150px] truncate">{file.name}</span>
                 <button
                   type="button"
                   onClick={() => handleRemoveFile(index)}
-                  className={`ml-1 rounded-sm transition-colors ${
-                    isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-gray-300'
-                  }`}
+                  className={`ml-1 rounded-sm transition-colors ${isDarkMode ? 'hover:bg-slate-600' : 'hover:bg-gray-300'
+                    }`}
                   aria-label={`Remove ${file.name}`}>
                   <span className="text-xs">✕</span>
                 </button>
@@ -224,23 +225,21 @@ export default function ChatInput({
           disabled={disabled}
           aria-disabled={disabled}
           rows={5}
-          className={`w-full resize-none border-none p-2 focus:outline-none ${
-            disabled
-              ? isDarkMode
-                ? 'cursor-not-allowed bg-slate-800 text-gray-400'
-                : 'cursor-not-allowed bg-gray-100 text-gray-500'
-              : isDarkMode
-                ? 'bg-slate-800 text-gray-200'
-                : 'bg-white'
-          }`}
+          className={`w-full resize-none border-none p-2 focus:outline-none ${disabled
+            ? isDarkMode
+              ? 'cursor-not-allowed bg-slate-800 text-gray-400'
+              : 'cursor-not-allowed bg-gray-100 text-gray-500'
+            : isDarkMode
+              ? 'bg-slate-800 text-gray-200'
+              : 'bg-white'
+            }`}
           placeholder={attachedFiles.length > 0 ? 'Add a message (optional)...' : t('chat_input_placeholder')}
           aria-label={t('chat_input_editor')}
         />
 
         <div
-          className={`flex items-center justify-between px-2 py-1.5 ${
-            disabled ? (isDarkMode ? 'bg-slate-800' : 'bg-gray-100') : isDarkMode ? 'bg-slate-800' : 'bg-white'
-          }`}>
+          className={`flex items-center justify-between px-2 py-1.5 ${disabled ? (isDarkMode ? 'bg-slate-800' : 'bg-gray-100') : isDarkMode ? 'bg-slate-800' : 'bg-white'
+            }`}>
           <div className="flex gap-2 text-gray-500">
             {/* File attachment button */}
             <button
@@ -249,13 +248,12 @@ export default function ChatInput({
               disabled={disabled}
               aria-label="Attach files"
               title="Attach text files (txt, md, json, csv, etc.)"
-              className={`rounded-md p-1.5 transition-colors ${
-                disabled
-                  ? 'cursor-not-allowed opacity-50'
-                  : isDarkMode
-                    ? 'text-gray-400 hover:bg-slate-700 hover:text-gray-200'
-                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-              }`}>
+              className={`rounded-md p-1.5 transition-colors ${disabled
+                ? 'cursor-not-allowed opacity-50'
+                : isDarkMode
+                  ? 'text-gray-400 hover:bg-slate-700 hover:text-gray-200'
+                  : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                }`}>
               <span className="text-lg">📎</span>
             </button>
 
@@ -282,20 +280,38 @@ export default function ChatInput({
                       ? t('chat_stt_recording_stop')
                       : t('chat_stt_input_start')
                 }
-                className={`rounded-md p-1.5 transition-colors ${
-                  disabled || isProcessingSpeech
-                    ? 'cursor-not-allowed opacity-50'
-                    : isRecording
-                      ? 'bg-red-500 text-white hover:bg-red-600'
-                      : isDarkMode
-                        ? 'text-gray-400 hover:bg-slate-700 hover:text-gray-200'
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
-                }`}>
+                className={`rounded-md p-1.5 transition-colors ${disabled || isProcessingSpeech
+                  ? 'cursor-not-allowed opacity-50'
+                  : isRecording
+                    ? 'bg-red-500 text-white hover:bg-red-600'
+                    : isDarkMode
+                      ? 'text-gray-400 hover:bg-slate-700 hover:text-gray-200'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                  }`}>
                 {isProcessingSpeech ? (
                   <AiOutlineLoading3Quarters className="size-4 animate-spin" />
                 ) : (
                   <FaMicrophone className={`size-4 ${isRecording ? 'animate-pulse' : ''}`} />
                 )}
+              </button>
+            )}
+
+            {onToggleResearchMode && (
+              <button
+                type="button"
+                onClick={onToggleResearchMode}
+                disabled={disabled}
+                aria-label={isResearchMode ? 'Disable Research Mode' : 'Enable Research Mode'}
+                title="Research Mode (AI Search)"
+                className={`rounded-md p-1.5 transition-colors ${disabled
+                  ? 'cursor-not-allowed opacity-50'
+                  : isResearchMode
+                    ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400'
+                    : isDarkMode
+                      ? 'text-gray-400 hover:bg-slate-700 hover:text-gray-200'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'
+                  }`}>
+                <FaGlobe className="size-4" />
               </button>
             )}
           </div>

@@ -39,11 +39,11 @@ const storage = createStorage<LLMKeyRecord>(
   {
     providers: {
       'openai-compatible': {
-        name: 'Local LM Studio',
+        name: 'Local Provider (vLLM)',
         type: ProviderTypeEnum.CustomOpenAI,
         apiKey: 'local-dummy-key',
-        baseUrl: 'http://localhost:1234/v1',
-        modelNames: ['hermes-3-llama-3.1-8b', 'qwen2.5-coder-7b-instruct', 'mistral-nemo-instruct-2407'],
+        baseUrl: 'http://localhost:8033/v1',
+        modelNames: ['gpt-oss-20b'],
         createdAt: Date.now(),
       }
     }

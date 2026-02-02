@@ -34,6 +34,7 @@ const SidePanel = () => {
   const [isProcessingSpeech, setIsProcessingSpeech] = useState(false);
   const [isReplaying, setIsReplaying] = useState(false);
   const [replayEnabled, setReplayEnabled] = useState(false);
+  const [isResearchMode, setIsResearchMode] = useState(false);
   const sessionIdRef = useRef<string | null>(null);
   const isReplayingRef = useRef<boolean>(false);
   const portRef = useRef<chrome.runtime.Port | null>(null);
@@ -622,8 +623,9 @@ const SidePanel = () => {
           task: text,
           taskId: sessionIdRef.current,
           tabId,
+          isResearchMode,
         });
-        console.log('new_task sent', text, tabId, sessionIdRef.current);
+        console.log('new_task sent', text, tabId, sessionIdRef.current, isResearchMode);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : String(err);
@@ -1027,6 +1029,8 @@ const SidePanel = () => {
                         isDarkMode={isDarkMode}
                         historicalSessionId={isHistoricalSession && replayEnabled ? currentSessionId : null}
                         onReplay={handleReplay}
+                        isResearchMode={isResearchMode}
+                        onToggleResearchMode={() => setIsResearchMode(prev => !prev)}
                       />
                     </div>
                     <div className="flex-1 overflow-y-auto">
@@ -1057,6 +1061,8 @@ const SidePanel = () => {
                       isDarkMode={isDarkMode}
                       historicalSessionId={isHistoricalSession && replayEnabled ? currentSessionId : null}
                       onReplay={handleReplay}
+                      isResearchMode={isResearchMode}
+                      onToggleResearchMode={() => setIsResearchMode(prev => !prev)}
                     />
                   </div>
                 )}

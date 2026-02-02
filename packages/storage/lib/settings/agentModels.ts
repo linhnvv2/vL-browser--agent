@@ -33,11 +33,11 @@ const storage = createStorage<AgentModelRecord>(
     agents: {
       [AgentNameEnum.Navigator]: {
         provider: 'openai-compatible',
-        modelName: 'hermes-3-llama-3.1-8b',
+        modelName: 'gpt-oss-20b',
       },
       [AgentNameEnum.Planner]: {
         provider: 'openai-compatible',
-        modelName: 'hermes-3-llama-3.1-8b',
+        modelName: 'gpt-oss-20b',
       },
     } as Record<AgentNameEnum, ModelConfig>
   },

@@ -105,8 +105,14 @@ chrome.runtime.onConnect.addListener(port => {
             if (!message.task) return port.postMessage({ type: 'error', error: t('bg_cmd_newTask_noTask') });
             if (!message.tabId) return port.postMessage({ type: 'error', error: t('bg_errors_noTabId') });
 
-            logger.info('new_task', message.tabId, message.task);
-            currentExecutor = await setupExecutor(message.taskId, message.task, browserContext);
+            let taskInstruction = message.task;
+            if (message.isResearchMode) {
+              const query = encodeURIComponent(message.task);
+              taskInstruction = `RESEARCH MODE: Navigate to https://www.google.com/search?q=${query}. Select 'AI' or 'Gemini' mode if available (or use AI Overviews). Research the topic deeply. Summarize your findings.\nOriginal Request: ${message.task}`;
+            }
+
+            logger.info('new_task', message.tabId, taskInstruction);
+            currentExecutor = await setupExecutor(message.taskId, taskInstruction, browserContext);
             subscribeToExecutorEvents(currentExecutor);
 
             const result = await currentExecutor.execute();
